@@ -2,13 +2,18 @@
 
 public interface IVisitorCredentialsService
 {
-    public Task<IEnumerable<VisitorCredentialEntity>> GetAllAsync();
+    public Task<IEnumerable<VisitorCredentialEntity>> GetAllAsync(
+        CancellationToken cancellationToken = default);
 
-    public Task<Option<VisitorCredentialEntity>> GetAsync(Guid id);
+    public Task<Option<VisitorCredentialEntity>> GetAsync(Guid id,
+         CancellationToken cancellationToken = default);
 
-    public Task CreateAsync(VisitorCredentialEntity entity);
+    public Task CreateAsync(VisitorCredentialEntity entity,
+         CancellationToken cancellationToken = default);
 
-    public Task UpdateAsync(VisitorCredentialEntity entity);
+    public Task UpdateAsync(VisitorCredentialEntity entity,
+         CancellationToken cancellationToken = default);
 
-    public Task DeleteAsync(Guid id);
+    public Task DeleteAsync(Guid id,
+         CancellationToken cancellationToken = default);
 }

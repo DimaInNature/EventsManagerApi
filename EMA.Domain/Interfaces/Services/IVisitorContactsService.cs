@@ -2,13 +2,18 @@
 
 public interface IVisitorContactsService
 {
-    public Task<IEnumerable<VisitorContactEntity>> GetAllAsync();
+    public Task<IEnumerable<VisitorContactEntity>> GetAllAsync(
+        CancellationToken cancellationToken = default);
 
-    public Task<Option<VisitorContactEntity>> GetAsync(Guid id);
+    public Task<Option<VisitorContactEntity>> GetAsync(Guid id,
+        CancellationToken cancellationToken = default);
 
-    public Task CreateAsync(VisitorContactEntity entity);
+    public Task CreateAsync(VisitorContactEntity entity,
+        CancellationToken cancellationToken = default);
 
-    public Task UpdateAsync(VisitorContactEntity entity);
+    public Task UpdateAsync(VisitorContactEntity entity,
+        CancellationToken cancellationToken = default);
 
-    public Task DeleteAsync(Guid id);
+    public Task DeleteAsync(Guid id,
+        CancellationToken cancellationToken = default);
 }
