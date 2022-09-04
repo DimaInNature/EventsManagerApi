@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="LanguageExt.Core" Version="4.3.2-beta" />
     <PackageReference Include="MediatR" Version="10.0.1" />
   </ItemGroup>
