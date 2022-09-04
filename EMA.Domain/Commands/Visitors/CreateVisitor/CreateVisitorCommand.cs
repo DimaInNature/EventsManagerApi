@@ -1,4 +1,4 @@
-﻿namespace EMA.Domain.Commands.Visitors.CreateVisitor;
+﻿namespace EMA.Domain.Commands.Visitors;
 
 public sealed record CreateVisitorCommand : IRequest<bool>
 {
