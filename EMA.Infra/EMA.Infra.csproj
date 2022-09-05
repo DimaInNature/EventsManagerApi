@@ -6,4 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="HotChocolate.AspNetCore" Version="13.0.0-preview.47" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0-preview.7.22375.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EMA.Application\EMA.Application.csproj" />
+    <ProjectReference Include="..\EMA.Domain\EMA.Domain.csproj" />
+    <ProjectReference Include="..\EMA.Persistence\EMA.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
