@@ -1,0 +1,12 @@
+﻿global using EMA.Domain.Interfaces.Services;
+global using EMA.Infra.IoC;
+global using EMA.Infra.IoC.MediatR;
+global using EMA.Infra.IoC.Profiles;
+global using EMA.Persistence.Entities;
+global using EMA.Persistence.IoC;
+global using EMA.Presentation.Configurations;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.OpenApi.Models;
+global using Serilog;
+global using Serilog.Events;
+global using System.Reflection;

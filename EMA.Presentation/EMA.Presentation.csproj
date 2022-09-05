@@ -6,15 +6,25 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>4a190504-78f0-4fca-8377-44787ea6e8f8</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="graphiql" Version="2.0.0" />
+    <PackageReference Include="GraphQL" Version="7.0.2" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="13.0.0-preview.47" />
+    <PackageReference Include="HotChocolate.Data" Version="13.0.0-preview.47" />
+    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.0.0-preview.47" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Serilog.AspNetCore" Version="6.1.0-dev-00281" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\EMA.Infra\EMA.Infra.csproj" />
+    <ProjectReference Include="..\EMA.Persistence\EMA.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

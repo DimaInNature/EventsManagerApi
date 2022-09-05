@@ -1,22 +1,37 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+RegisterServices(services: builder.Services);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+Configure(app);
 
 app.Run();
+
+void RegisterServices(IServiceCollection services)
+{
+    services.AddLoggingConfiguration(hostBuilder: builder.Host);
+
+    services.AddDatabaseConfiguration(configuration: builder.Configuration);
+
+    services.AddSwaggerConfiguration();
+
+    services.AddServices();
+
+    services.AddMediatRConfiguration();
+
+    services.AddControllers();
+
+    services.AddGraphQLApi();
+}
+
+void Configure(WebApplication app)
+{
+    app.UseHttpsRedirection();
+
+    app.MapControllers();
+
+    app.UseSwaggerSetup();
+
+    app.MapGraphQL("/graphql");
+}
