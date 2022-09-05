@@ -1,17 +1,17 @@
 ﻿namespace EMA.Domain.Interfaces.Services;
 
-public interface IPresentationStatesService
+public interface IEventStatesService
 {
-    public Task<IEnumerable<PresentationStateEntity>> GetAllAsync(
+    public Task<IEnumerable<EventStateEntity>> GetAllAsync(
         CancellationToken cancellationToken);
 
-    public Task<Option<PresentationStateEntity>> GetAsync(Guid id,
+    public Task<Option<EventStateEntity>> GetAsync(Guid id,
         CancellationToken cancellationToken);
 
-    public Task CreateAsync(PresentationStateEntity entity,
+    public Task CreateAsync(EventStateEntity entity,
         CancellationToken cancellationToken);
 
-    public Task UpdateAsync(PresentationStateEntity entity,
+    public Task UpdateAsync(EventStateEntity entity,
         CancellationToken cancellationToken);
 
     public Task DeleteAsync(Guid id,

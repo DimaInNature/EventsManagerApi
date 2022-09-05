@@ -1,1 +1,16 @@
-﻿
+﻿global using EMA.Domain.Commands.Events;
+global using EMA.Domain.Commands.EventStates;
+global using EMA.Domain.Commands.VisitorContacts;
+global using EMA.Domain.Commands.VisitorCredentials;
+global using EMA.Domain.Commands.VisitorGenders;
+global using EMA.Domain.Commands.Visitors;
+global using EMA.Domain.Interfaces.Services;
+global using EMA.Domain.Queries.Events;
+global using EMA.Domain.Queries.EventStates;
+global using EMA.Domain.Queries.VisitorContacts;
+global using EMA.Domain.Queries.VisitorCredentials;
+global using EMA.Domain.Queries.VisitorGenders;
+global using EMA.Domain.Queries.Visitors;
+global using EMA.Persistence.Entities;
+global using LanguageExt;
+global using MediatR;

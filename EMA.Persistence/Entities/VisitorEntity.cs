@@ -16,7 +16,7 @@ public class VisitorEntity : IDatabaseEntity
 
     public VisitorContactEntity? Contact { get; set; }
 
-    public Guid? PresentationId { get; set; }
+    public Guid? EventId { get; set; }
 
-    public PresentationEntity? Presentation { get; set; }
+    public EventEntity? Event { get; set; }
 }
