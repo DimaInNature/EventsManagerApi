@@ -5,12 +5,14 @@ public static class DatabaseConfiguration
     public static void AddDatabaseConfiguration(
         this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<DbContext, ApplicationDbContext>();
+        services.AddSingleton<DbContext, ApplicationDbContext>();
 
-        services.AddDbContextPool<ApplicationDbContext>(options =>
+        services.AddDbContext<ApplicationDbContext>(options =>
         {
             options.UseSqlite(connectionString: configuration.GetConnectionString(name: "Sqlite")
                 ?? throw new NullReferenceException(message: "Connection string is empty."));
-        });
+
+        },
+        contextLifetime: ServiceLifetime.Singleton);
     }
 }

@@ -2,9 +2,9 @@
 
 public class ApplicationDbContext : DbContext
 {
-    public DbSet<PresentationEntity> Presentations => Set<PresentationEntity>();
+    public DbSet<EventEntity> Events => Set<EventEntity>();
 
-    public DbSet<PresentationStateEntity> PresentationStates => Set<PresentationStateEntity>();
+    public DbSet<EventStateEntity> EventStates => Set<EventStateEntity>();
 
     public DbSet<VisitorEntity> Visitors => Set<VisitorEntity>();
 
@@ -19,11 +19,11 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<PresentationEntity>()
+        modelBuilder.Entity<EventEntity>()
             .HasIndex(indexExpression: presentation => presentation.Id)
             .IsUnique();
 
-        modelBuilder.Entity<PresentationStateEntity>()
+        modelBuilder.Entity<EventStateEntity>()
             .HasIndex(indexExpression: presentationState => presentationState.Id)
             .IsUnique();
 
