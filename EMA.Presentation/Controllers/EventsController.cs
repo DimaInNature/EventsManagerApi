@@ -5,14 +5,6 @@
 [Route(template: "[controller]")]
 public class EventsController : ControllerBase
 {
-    private readonly IEventsService _eventsService;
-
-    public EventsController(
-        IEventsService eventsService)
-    {
-        _eventsService = eventsService;
-    }
-
     /// <summary>
     /// Get all events.
     /// </summary>
@@ -29,9 +21,10 @@ public class EventsController : ControllerBase
     [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<EventEntity>>> GetList(
+        IEventsService eventsService,
         CancellationToken cancellationToken)
     {
-        var events = await _eventsService.GetAllAsync(cancellationToken);
+        var events = await eventsService.GetAllAsync(cancellationToken);
 
         return events.Any() ? Ok(value: events) : NotFound();
     }
@@ -54,9 +47,10 @@ public class EventsController : ControllerBase
     [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
     [HttpGet(template: "{id}")]
     public async Task<IActionResult> Get(Guid id,
+        IEventsService eventsService,
         CancellationToken cancellationToken)
     {
-        var @event = await _eventsService.GetAsync(id, cancellationToken);
+        var @event = await eventsService.GetAsync(id, cancellationToken);
 
         return @event.Match<IActionResult>(Some: Ok, None: NotFound);
     }
@@ -81,9 +75,11 @@ public class EventsController : ControllerBase
     [ProducesResponseType(statusCode: StatusCodes.Status201Created)]
     [HttpPost]
     public async Task<ActionResult<EventEntity>> Create(
-        [FromBody] EventEntity @event, CancellationToken cancellationToken)
+        [FromBody] EventEntity @event,
+        IEventsService eventsService, 
+        CancellationToken cancellationToken)
     {
-        await _eventsService.CreateAsync(entity: @event, cancellationToken);
+        await eventsService.CreateAsync(entity: @event, cancellationToken);
 
         return CreatedAtAction(
             actionName: nameof(Get),
@@ -113,9 +109,10 @@ public class EventsController : ControllerBase
     [HttpPut]
     public async Task<ActionResult> Update(
         [FromBody] EventEntity @event,
+        IEventsService eventsService,
         CancellationToken cancellationToken)
     {
-        await _eventsService.UpdateAsync(entity: @event, cancellationToken);
+        await eventsService.UpdateAsync(entity: @event, cancellationToken);
 
         return NoContent();
     }
@@ -134,9 +131,10 @@ public class EventsController : ControllerBase
     [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
     [HttpDelete(template: "{id}")]
     public async Task<ActionResult> Delete(Guid id,
+        IEventsService eventsService,
         CancellationToken cancellationToken)
     {
-        await _eventsService.DeleteAsync(id, cancellationToken);
+        await eventsService.DeleteAsync(id, cancellationToken);
 
         return NoContent();
     }
