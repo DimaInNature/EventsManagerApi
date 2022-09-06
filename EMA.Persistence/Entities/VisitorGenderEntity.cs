@@ -6,5 +6,6 @@ public class VisitorGenderEntity : IDatabaseEntity
 
     public string? Name { get; set; }
 
+    [JsonIgnore]
     public IEnumerable<VisitorEntity>? Visitors { get; set; }
 }

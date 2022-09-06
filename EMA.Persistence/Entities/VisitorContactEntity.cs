@@ -8,5 +8,6 @@ public class VisitorContactEntity : IDatabaseEntity
 
     public string? Email { get; set; }
 
+    [JsonIgnore]
     public VisitorEntity? Visitor { get; set; }
 }

@@ -14,7 +14,9 @@ public class EventEntity : IDatabaseEntity
 
     public Guid? StateId { get; set; }
 
+    [JsonIgnore]
     public EventStateEntity? State { get; set; }
 
+    [JsonIgnore]
     public IEnumerable<VisitorEntity>? Members { get; set; }
 }

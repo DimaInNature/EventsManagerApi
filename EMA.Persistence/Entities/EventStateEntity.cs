@@ -6,5 +6,6 @@ public class EventStateEntity : IDatabaseEntity
 
     public string? Name { get; set; }
 
+    [JsonIgnore]
     public IEnumerable<EventStateEntity>? Presentations { get; set; }
 }

@@ -12,5 +12,6 @@ public class VisitorCredentialEntity : IDatabaseEntity
 
     public DateOnly? BirthDay { get; set; }
 
+    [JsonIgnore]
     public VisitorEntity? Visitor;
 }
