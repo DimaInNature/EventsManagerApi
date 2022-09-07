@@ -5,6 +5,7 @@ global using EMA.Infra.IoC.Profiles;
 global using EMA.Persistence.Entities;
 global using EMA.Persistence.IoC;
 global using EMA.Presentation.Configurations;
+global using LanguageExt;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.OpenApi.Models;
 global using Serilog;

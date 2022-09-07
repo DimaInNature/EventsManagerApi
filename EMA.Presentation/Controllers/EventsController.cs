@@ -39,6 +39,7 @@ public class EventsController : ControllerBase
     ///
     /// </remarks>
     /// <param name="id"> Id. </param>
+    /// <param name="eventsService"> Injected service </param>
     /// <param name="cancellationToken"> Cancellation token. </param>
     /// <response code="200"> Object. </response>
     /// <response code="404"> If not found. </response>
@@ -53,6 +54,33 @@ public class EventsController : ControllerBase
         var @event = await eventsService.GetAsync(id, cancellationToken);
 
         return @event.Match<IActionResult>(Some: Ok, None: NotFound);
+    }
+
+    /// <summary>
+    /// Get event state by event Id
+    /// </summary>
+    /// <remarks>
+    /// Request example:
+    ///
+    ///     GET /Events/Guid/State
+    ///
+    /// </remarks>
+    /// <param name="id"> Id. </param>
+    /// <param name="eventsService"> Injected service. </param>
+    /// <param name="cancellationToken"> Cancellation token. </param>
+    /// <response code="200"> Object. </response>
+    /// <response code="404"> If not found. </response>
+    [Tags(tags: "Events")]
+    [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+    [HttpGet(template: "{id}/State")]
+    public async Task<IActionResult> GetState(Guid id,
+        IEventsService eventsService,
+        CancellationToken cancellationToken)
+    {
+        var @event = await eventsService.GetAsync(id, cancellationToken, x => x.State);
+
+        return @event.Select(x => x.State).Match<IActionResult>(Some: Ok, None: NotFound);
     }
 
     /// <summary>

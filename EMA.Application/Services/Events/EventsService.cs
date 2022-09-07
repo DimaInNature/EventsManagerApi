@@ -1,4 +1,6 @@
-﻿namespace EMA.Application.Services.Events;
+﻿using System.Linq.Expressions;
+
+namespace EMA.Application.Services.Events;
 
 public class EventsService : IEventsService
 {
@@ -16,6 +18,12 @@ public class EventsService : IEventsService
         CancellationToken cancellationToken = default) =>
         await _mediator.Send(request: new GetEventQuery(
             predicate: entity => entity.Id.Equals(g: id)), cancellationToken);
+
+    public async Task<Option<EventEntity>> GetAsync(Guid id,
+        CancellationToken cancellationToken = default,
+        params Expression<Func<EventEntity, object>>[] includes) =>
+        await _mediator.Send(request: new GetEventWithIncludeQuery(
+            predicate: entity => entity.Id.Equals(g: id), includes), cancellationToken);
 
     public async Task CreateAsync(EventEntity entity,
         CancellationToken cancellationToken = default) =>

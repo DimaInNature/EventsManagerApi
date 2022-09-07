@@ -27,6 +27,9 @@ public static class EventMediatRProfile
         services.AddScoped<IRequest<Option<EventEntity>>, GetEventQuery>();
         services.AddScoped<IRequestHandler<GetEventQuery, Option<EventEntity>>, GetEventQueryHandler>();
 
+        services.AddScoped<IRequest<EventEntity?>, GetEventWithIncludeQuery>();
+        services.AddScoped<IRequestHandler<GetEventWithIncludeQuery, EventEntity?>, GetEventWithIncludeQueryHandler>();
+
         services.AddScoped<IRequest<IEnumerable<EventEntity>>, GetEventsListQuery>();
         services.AddScoped<IRequestHandler<GetEventsListQuery, IEnumerable<EventEntity>>, GetEventsListQueryHandler>();
 
