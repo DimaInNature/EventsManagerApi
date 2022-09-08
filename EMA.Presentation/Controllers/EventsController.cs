@@ -78,9 +78,63 @@ public class EventsController : ControllerBase
         IEventsService eventsService,
         CancellationToken cancellationToken)
     {
-        var @event = await eventsService.GetAsync(id, cancellationToken, x => x.State);
+        var @event = await eventsService.GetAsync(id, cancellationToken, includes: x => x.State);
 
         return @event.Select(x => x.State).Match<IActionResult>(Some: Ok, None: NotFound);
+    }
+
+    /// <summary>
+    /// Get event members by event Id
+    /// </summary>
+    /// <remarks>
+    /// Request example:
+    ///
+    ///     GET /Events/Guid/Members
+    ///
+    /// </remarks>
+    /// <param name="id"> Id. </param>
+    /// <param name="eventsService"> Injected service. </param>
+    /// <param name="cancellationToken"> Cancellation token. </param>
+    /// <response code="200"> Object. </response>
+    /// <response code="404"> If not found. </response>
+    [Tags(tags: "Events")]
+    [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+    [HttpGet(template: "{id}/Members")]
+    public async Task<IActionResult> GetMembers(Guid id,
+        IEventsService eventsService,
+        CancellationToken cancellationToken)
+    {
+        var eventMembers = await eventsService.GetAsync(id, cancellationToken, includes: x => x.Members);
+
+        return eventMembers.Select(x => x.Members).Match<IActionResult>(Some: Ok, None: NotFound);
+    }
+
+    /// <summary>
+    /// Get event by Id with Includes
+    /// </summary>
+    /// <remarks>
+    /// Request example:
+    ///
+    ///     GET /Events/Guid/AllIncludes
+    ///
+    /// </remarks>
+    /// <param name="id"> Id. </param>
+    /// <param name="eventsService"> Injected service. </param>
+    /// <param name="cancellationToken"> Cancellation token. </param>
+    /// <response code="200"> Object. </response>
+    /// <response code="404"> If not found. </response>
+    [Tags(tags: "Events")]
+    [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+    [HttpGet(template: "{id}/AllIncludes")]
+    public async Task<IActionResult> GetWithAllIncludes(Guid id,
+        IEventsService eventsService,
+        CancellationToken cancellationToken)
+    {
+        var @event = await eventsService.GetAsync(id, cancellationToken, x => x.Members, x => x.State);
+
+        return @event.Match<IActionResult>(Some: Ok, None: NotFound);
     }
 
     /// <summary>
