@@ -22,7 +22,7 @@ public class EventsService : IEventsService
     public async Task<Option<EventEntity>> GetAsync(Guid id,
         CancellationToken cancellationToken = default,
         params Expression<Func<EventEntity, object>>[] includes) =>
-        await _mediator.Send(request: new GetEventWithIncludeQuery(
+        await _mediator.Send(request: new GetEventQuery(
             predicate: entity => entity.Id.Equals(g: id), includes), cancellationToken);
 
     public async Task CreateAsync(EventEntity entity,

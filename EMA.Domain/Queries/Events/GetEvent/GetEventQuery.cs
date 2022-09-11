@@ -1,13 +1,16 @@
 ﻿namespace EMA.Domain.Queries.Events;
 
 public sealed record GetEventQuery
-    : IRequest<Option<EventEntity>>
+    : IRequest<EventEntity?>
 {
-    public Option<Func<EventEntity, bool>> Predicate { get; }
+    public Func<EventEntity, bool>? Predicate { get; }
+
+    public Expression<Func<EventEntity, object>>[]? Includes { get; }
 
     public GetEventQuery(
-        Func<EventEntity, bool> predicate) =>
-        Predicate = predicate;
+        Func<EventEntity, bool> predicate,
+        params Expression<Func<EventEntity, object>>[] includes) =>
+        (Predicate, Includes) = (predicate, includes);
 
     public GetEventQuery() { }
 }
