@@ -78,7 +78,7 @@ public class EventsController : ControllerBase
         IEventsService eventsService,
         CancellationToken cancellationToken)
     {
-        var @event = await eventsService.GetAsync(id, cancellationToken, includes: x => x.State);
+        var @event = await eventsService.GetAsync(id, cancellationToken, includeProperties: x => x.State);
 
         return @event.Select(x => x.State).Match<IActionResult>(Some: Ok, None: NotFound);
     }
@@ -105,7 +105,7 @@ public class EventsController : ControllerBase
         IEventsService eventsService,
         CancellationToken cancellationToken)
     {
-        var eventMembers = await eventsService.GetAsync(id, cancellationToken, includes: x => x.Members);
+        var eventMembers = await eventsService.GetAsync(id, cancellationToken, includeProperties: x => x.Members);
 
         return eventMembers.Select(x => x.Members).Match<IActionResult>(Some: Ok, None: NotFound);
     }

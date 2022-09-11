@@ -5,12 +5,12 @@ public sealed record GetEventQuery
 {
     public Func<EventEntity, bool>? Predicate { get; }
 
-    public Expression<Func<EventEntity, object>>[]? Includes { get; }
+    public Expression<Func<EventEntity, object>>[]? IncludeProperties { get; }
 
     public GetEventQuery(
         Func<EventEntity, bool> predicate,
-        params Expression<Func<EventEntity, object>>[] includes) =>
-        (Predicate, Includes) = (predicate, includes);
+        params Expression<Func<EventEntity, object>>[] includeProperties) =>
+        (Predicate, IncludeProperties) = (predicate, includeProperties);
 
     public GetEventQuery() { }
 }

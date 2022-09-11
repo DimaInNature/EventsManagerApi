@@ -1,7 +1,7 @@
 ﻿namespace EMA.Domain.Queries.Visitors;
 
 public sealed record GetVisitorQueryHandler
-    : IRequestHandler<GetVisitorQuery, Option<VisitorEntity>>
+    : IRequestHandler<GetVisitorQuery, VisitorEntity?>
 {
     private readonly IGenericRepository<VisitorEntity> _repository;
 
@@ -9,10 +9,21 @@ public sealed record GetVisitorQueryHandler
         IGenericRepository<VisitorEntity> repository) =>
         _repository = repository;
 
-    public async Task<Option<VisitorEntity>> Handle(
+    public async Task<VisitorEntity?> Handle(
         GetVisitorQuery request,
-        CancellationToken cancellationToken = default) =>
-        request.Predicate.Match(
-            Some: _repository.GetFirstOrDefault,
-            None: () => default);
+        CancellationToken cancellationToken = default)
+    {
+        if (request.Predicate is null)
+            return await Task.FromResult(result: default(VisitorEntity?));
+
+        if (request.IncludeProperties is null)
+            return await Task.FromResult(
+                result: _repository.GetFirstOrDefault(
+                    predicate: request.Predicate));
+
+        return await Task.FromResult(
+            result: _repository.GetFirstOrDefaultWithInclude(
+                predicate: request.Predicate,
+                includeProperties: request.IncludeProperties));
+    }
 }

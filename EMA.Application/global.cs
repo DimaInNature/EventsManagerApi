@@ -14,3 +14,4 @@ global using EMA.Domain.Queries.Visitors;
 global using EMA.Persistence.Entities;
 global using LanguageExt;
 global using MediatR;
+global using System.Linq.Expressions;

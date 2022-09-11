@@ -13,11 +13,17 @@ public sealed record GetEventQueryHandler
         GetEventQuery request,
         CancellationToken cancellationToken = default)
     {
-        if (request.Predicate is null || request.Includes is null)
-            return default;
+        if (request.Predicate is null)
+            return await Task.FromResult(result: default(EventEntity?));
 
-        return _repository.GetFirstOrDefaultWithInclude(
-            predicate: request.Predicate,
-            includeProperties: request.Includes);
+        if (request.IncludeProperties is null)
+            return await Task.FromResult(
+                result: _repository.GetFirstOrDefault(
+                    predicate: request.Predicate));
+
+        return await Task.FromResult(
+            result: _repository.GetFirstOrDefaultWithInclude(
+                predicate: request.Predicate,
+                includeProperties: request.IncludeProperties));
     }
 }

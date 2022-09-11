@@ -57,6 +57,153 @@ public class VisitorsController : ControllerBase
     }
 
     /// <summary>
+    /// Get visitor contact by visitor Id
+    /// </summary>
+    /// <remarks>
+    /// Request example:
+    ///
+    ///     GET /Visitors/Guid/Contact
+    ///
+    /// </remarks>
+    /// <param name="id"> Id. </param>
+    /// <param name="visitorsService"> Injected service. </param>
+    /// <param name="cancellationToken"> Cancellation token. </param>
+    /// <response code="200"> Object. </response>
+    /// <response code="404"> If not found. </response>
+    [Tags(tags: "Visitors")]
+    [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+    [HttpGet(template: "{id}/Contact")]
+    public async Task<IActionResult> GetContact(Guid id,
+        IVisitorsService visitorsService,
+        CancellationToken cancellationToken)
+    {
+        var visitor = await visitorsService.GetAsync(id, cancellationToken,
+            includeProperties: visitor => visitor.Contact!);
+
+        return visitor.Select(visitor => visitor.Contact)
+            .Match<IActionResult>(Some: Ok, None: NotFound);
+    }
+
+    /// <summary>
+    /// Get visitor credentials by visitor Id
+    /// </summary>
+    /// <remarks>
+    /// Request example:
+    ///
+    ///     GET /Visitors/Guid/Credentials
+    ///
+    /// </remarks>
+    /// <param name="id"> Id. </param>
+    /// <param name="visitorsService"> Injected service. </param>
+    /// <param name="cancellationToken"> Cancellation token. </param>
+    /// <response code="200"> Object. </response>
+    /// <response code="404"> If not found. </response>
+    [Tags(tags: "Visitors")]
+    [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+    [HttpGet(template: "{id}/Credentials")]
+    public async Task<IActionResult> GetCredentials(Guid id,
+        IVisitorsService visitorsService,
+        CancellationToken cancellationToken)
+    {
+        var visitor = await visitorsService.GetAsync(id, cancellationToken,
+            includeProperties: visitor => visitor.Credentials!);
+
+        return visitor.Select(visitor => visitor.Credentials)
+            .Match<IActionResult>(Some: Ok, None: NotFound);
+    }
+
+    /// <summary>
+    /// Get visitor event by visitor Id
+    /// </summary>
+    /// <remarks>
+    /// Request example:
+    ///
+    ///     GET /Visitors/Guid/Event
+    ///
+    /// </remarks>
+    /// <param name="id"> Id. </param>
+    /// <param name="visitorsService"> Injected service. </param>
+    /// <param name="cancellationToken"> Cancellation token. </param>
+    /// <response code="200"> Object. </response>
+    /// <response code="404"> If not found. </response>
+    [Tags(tags: "Visitors")]
+    [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+    [HttpGet(template: "{id}/Event")]
+    public async Task<IActionResult> GetEvent(Guid id,
+        IVisitorsService visitorsService,
+        CancellationToken cancellationToken)
+    {
+        var visitor = await visitorsService.GetAsync(id, cancellationToken,
+            includeProperties: visitor => visitor.Event!);
+
+        return visitor.Select(visitor => visitor.Event)
+            .Match<IActionResult>(Some: Ok, None: NotFound);
+    }
+
+    /// <summary>
+    /// Get visitor gender by visitor Id
+    /// </summary>
+    /// <remarks>
+    /// Request example:
+    ///
+    ///     GET /Visitors/Guid/Gender
+    ///
+    /// </remarks>
+    /// <param name="id"> Id. </param>
+    /// <param name="visitorsService"> Injected service. </param>
+    /// <param name="cancellationToken"> Cancellation token. </param>
+    /// <response code="200"> Object. </response>
+    /// <response code="404"> If not found. </response>
+    [Tags(tags: "Visitors")]
+    [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+    [HttpGet(template: "{id}/Gender")]
+    public async Task<IActionResult> GetGender(Guid id,
+        IVisitorsService visitorsService,
+        CancellationToken cancellationToken)
+    {
+        var visitor = await visitorsService.GetAsync(id, cancellationToken,
+            includeProperties: visitor => visitor.Gender!);
+
+        return visitor.Select(visitor => visitor.Gender)
+            .Match<IActionResult>(Some: Ok, None: NotFound);
+    }
+
+    /// <summary>
+    /// Get visitor by Id with Includes
+    /// </summary>
+    /// <remarks>
+    /// Request example:
+    ///
+    ///     GET /Visitors/Guid/AllIncludes
+    ///
+    /// </remarks>
+    /// <param name="id"> Id. </param>
+    /// <param name="visitorsService"> Injected service. </param>
+    /// <param name="cancellationToken"> Cancellation token. </param>
+    /// <response code="200"> Object. </response>
+    /// <response code="404"> If not found. </response>
+    [Tags(tags: "Visitors")]
+    [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+    [HttpGet(template: "{id}/AllIncludes")]
+    public async Task<IActionResult> GetWithAllIncludes(Guid id,
+        IVisitorsService visitorsService,
+        CancellationToken cancellationToken)
+    {
+        var visitor = await visitorsService.GetAsync(id, cancellationToken,
+            visitor => visitor.Contact!,
+            visitor => visitor.Credentials!,
+            visitor => visitor.Event!,
+            visitor => visitor.Gender!);
+
+        return visitor.Match<IActionResult>(Some: Ok, None: NotFound);
+    }
+
+    /// <summary>
     /// Create visitor.
     /// </summary>
     /// <remarks>
