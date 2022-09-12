@@ -3,11 +3,11 @@
 public sealed record GetEventsListQuery
     : IRequest<IEnumerable<EventEntity>>
 {
-    public Option<Func<EventEntity, bool>> Predicate { get; }
+    public Expression<Func<EventEntity, object>>[]? IncludeProperties { get; }
 
     public GetEventsListQuery(
-        Func<EventEntity, bool> predicate) =>
-        Predicate = predicate;
+       params Expression<Func<EventEntity, object>>[] includeProperties) =>
+        IncludeProperties = includeProperties;
 
     public GetEventsListQuery() { }
 }

@@ -5,6 +5,10 @@ public interface IEventsService
     public Task<IEnumerable<EventEntity>> GetAllAsync(
         CancellationToken cancellationToken = default);
 
+    public Task<IEnumerable<EventEntity>> GetAllAsync(
+        CancellationToken cancellationToken = default,
+        params Expression<Func<EventEntity, object>>[] includeProperties);
+
     public Task<Option<EventEntity>> GetAsync(Guid id,
         CancellationToken cancellationToken = default);
 

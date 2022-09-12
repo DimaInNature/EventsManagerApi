@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace EMA.Application.Services.Events;
+﻿namespace EMA.Application.Services.Events;
 
 public class EventsService : IEventsService
 {
@@ -13,6 +11,11 @@ public class EventsService : IEventsService
     public async Task<IEnumerable<EventEntity>> GetAllAsync(
         CancellationToken cancellationToken = default) =>
         await _mediator.Send(request: new GetEventsListQuery(), cancellationToken);
+
+    public async Task<IEnumerable<EventEntity>> GetAllAsync(
+        CancellationToken cancellationToken = default,
+        params Expression<Func<EventEntity, object>>[] includeProperties) =>
+        await _mediator.Send(request: new GetEventsListQuery(includeProperties));
 
     public async Task<Option<EventEntity>> GetAsync(Guid id,
         CancellationToken cancellationToken = default) =>
