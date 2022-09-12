@@ -78,9 +78,10 @@ public class EventsController : ControllerBase
         IEventsService eventsService,
         CancellationToken cancellationToken)
     {
-        var @event = await eventsService.GetAsync(id, cancellationToken, includeProperties: x => x.State);
+        var @event = await eventsService.GetAsync(id, cancellationToken,
+            includeProperties: @event => @event.State!);
 
-        return @event.Select(x => x.State).Match<IActionResult>(Some: Ok, None: NotFound);
+        return @event.Select(@event => @event.State).Match<IActionResult>(Some: Ok, None: NotFound);
     }
 
     /// <summary>
@@ -105,9 +106,11 @@ public class EventsController : ControllerBase
         IEventsService eventsService,
         CancellationToken cancellationToken)
     {
-        var eventMembers = await eventsService.GetAsync(id, cancellationToken, includeProperties: x => x.Members);
+        var eventMembers = await eventsService.GetAsync(id, cancellationToken,
+            includeProperties: @event => @event.Members!);
 
-        return eventMembers.Select(x => x.Members).Match<IActionResult>(Some: Ok, None: NotFound);
+        return eventMembers.Select(@event => @event.Members)
+            .Match<IActionResult>(Some: Ok, None: NotFound);
     }
 
     /// <summary>
@@ -132,7 +135,9 @@ public class EventsController : ControllerBase
         IEventsService eventsService,
         CancellationToken cancellationToken)
     {
-        var @event = await eventsService.GetAsync(id, cancellationToken, x => x.Members, x => x.State);
+        var @event = await eventsService.GetAsync(id, cancellationToken,
+            @event => @event.Members!,
+            @event => @event.State!);
 
         return @event.Match<IActionResult>(Some: Ok, None: NotFound);
     }
@@ -158,7 +163,7 @@ public class EventsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<EventEntity>> Create(
         [FromBody] EventEntity @event,
-        IEventsService eventsService, 
+        IEventsService eventsService,
         CancellationToken cancellationToken)
     {
         await eventsService.CreateAsync(entity: @event, cancellationToken);
