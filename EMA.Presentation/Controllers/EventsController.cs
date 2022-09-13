@@ -225,4 +225,43 @@ public class EventsController : ControllerBase
 
         return NoContent();
     }
+
+    /// <summary>
+    /// Delete member by id from event by Id.
+    /// </summary>
+    /// <remarks>
+    /// Request example:
+    ///
+    ///     DELETE /Events/{eventId}/Members/{memberId}
+    ///
+    /// </remarks>
+    /// <response code="204">The object has been successfully deleted.</response>
+    [Tags(tags: "Events")]
+    [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+    [HttpDelete(template: "{id}/Members/{memberId}")]
+    public async Task<ActionResult> DeleteMember(
+        Guid eventId, Guid memberId,
+        IEventsService eventsService,
+        CancellationToken cancellationToken)
+    {
+        var @event = await eventsService.GetAsync(
+            id: eventId, cancellationToken,
+            includeProperties: @event => @event.Members!);
+
+        var eventMembers = @event.Select(f: @event => @event.Members);
+
+        var deletableMember = eventMembers.Select(
+            f: @event => @event!
+            .FirstOrDefault(
+                predicate: @event => @event.Id.Equals(g: memberId)));
+
+        if (deletableMember.IsNone)
+        {
+            return NotFound(value: "This member was not registered for this event.");
+        }
+
+        await eventsService.DeleteAsync(id: eventId, cancellationToken);
+
+        return NoContent();
+    }
 }
