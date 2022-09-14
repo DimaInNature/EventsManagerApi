@@ -11,10 +11,14 @@ public sealed record UpdateVisitorContactCommandHandler
 
     public async Task<bool> Handle(
         UpdateVisitorContactCommand request,
-        CancellationToken cancellationToken = default) =>
-        await request.Entity.MatchAsync(
-            Some: async (VisitorContactEntity entity) =>
-                await _repository.UpdateAsync(entity, cancellationToken),
-            None: async () =>
-                await Task.FromResult<bool>(result: default));
+        CancellationToken cancellationToken = default)
+    {
+        if (request.Entity is null)
+        {
+            return await Task.FromResult<bool>(result: default);
+        }
+
+        return await _repository.UpdateAsync(
+            entity: request.Entity, cancellationToken);
+    }
 }

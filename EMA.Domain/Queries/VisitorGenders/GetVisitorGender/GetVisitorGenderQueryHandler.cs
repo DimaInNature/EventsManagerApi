@@ -1,7 +1,7 @@
 ﻿namespace EMA.Domain.Queries.VisitorGenders;
 
 public sealed record GetVisitorGenderQueryHandler
-    : IRequestHandler<GetVisitorGenderQuery, Option<VisitorGenderEntity>>
+    : IRequestHandler<GetVisitorGenderQuery, VisitorGenderEntity?>
 {
     private readonly IGenericRepository<VisitorGenderEntity> _repository;
 
@@ -9,10 +9,17 @@ public sealed record GetVisitorGenderQueryHandler
         IGenericRepository<VisitorGenderEntity> repository) =>
         _repository = repository;
 
-    public async Task<Option<VisitorGenderEntity>> Handle(
+    public async Task<VisitorGenderEntity?> Handle(
         GetVisitorGenderQuery request,
-        CancellationToken cancellationToken = default) =>
-        request.Predicate.Match(
-            Some: _repository.GetFirstOrDefault,
-            None: () => default);
+        CancellationToken cancellationToken = default)
+    {
+        if (request.Predicate is null)
+        {
+            return default;
+        }
+
+        return await Task.FromResult(
+            result: _repository.GetFirstOrDefault(
+                predicate: request.Predicate));
+    }
 }

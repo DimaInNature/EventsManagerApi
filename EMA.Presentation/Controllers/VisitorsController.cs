@@ -53,7 +53,7 @@ public class VisitorsController : ControllerBase
     {
         var visitor = await visitorsService.GetAsync(id, cancellationToken);
 
-        return visitor.Match<IActionResult>(Some: Ok, None: NotFound);
+        return visitor is not null ? Ok(value: visitor) : NotFound();
     }
 
     /// <summary>
@@ -81,8 +81,7 @@ public class VisitorsController : ControllerBase
         var visitor = await visitorsService.GetAsync(id, cancellationToken,
             includeProperties: visitor => visitor.Contact!);
 
-        return visitor.Select(visitor => visitor.Contact)
-            .Match<IActionResult>(Some: Ok, None: NotFound);
+        return visitor is not null ? Ok(value: visitor) : NotFound();
     }
 
     /// <summary>
@@ -110,8 +109,7 @@ public class VisitorsController : ControllerBase
         var visitor = await visitorsService.GetAsync(id, cancellationToken,
             includeProperties: visitor => visitor.Credentials!);
 
-        return visitor.Select(visitor => visitor.Credentials)
-            .Match<IActionResult>(Some: Ok, None: NotFound);
+        return visitor is not null ? Ok(value: visitor) : NotFound();
     }
 
     /// <summary>
@@ -139,8 +137,7 @@ public class VisitorsController : ControllerBase
         var visitor = await visitorsService.GetAsync(id, cancellationToken,
             includeProperties: visitor => visitor.Event!);
 
-        return visitor.Select(visitor => visitor.Event)
-            .Match<IActionResult>(Some: Ok, None: NotFound);
+        return visitor is not null ? Ok(value: visitor) : NotFound();
     }
 
     /// <summary>
@@ -168,8 +165,7 @@ public class VisitorsController : ControllerBase
         var visitor = await visitorsService.GetAsync(id, cancellationToken,
             includeProperties: visitor => visitor.Gender!);
 
-        return visitor.Select(visitor => visitor.Gender)
-            .Match<IActionResult>(Some: Ok, None: NotFound);
+        return visitor is not null ? Ok(value: visitor) : NotFound();
     }
 
     /// <summary>
@@ -200,7 +196,7 @@ public class VisitorsController : ControllerBase
             visitor => visitor.Event!,
             visitor => visitor.Gender!);
 
-        return visitor.Match<IActionResult>(Some: Ok, None: NotFound);
+        return visitor is not null ? Ok(value: visitor) : NotFound();
     }
 
     /// <summary>

@@ -53,7 +53,7 @@ public class VisitorGendersController : ControllerBase
     {
         var visitorGender = await visitorGendersService.GetAsync(id, cancellationToken);
 
-        return visitorGender.Match<IActionResult>(Some: Ok, None: NotFound);
+        return visitorGender is not null ? Ok(value: visitorGender) : NotFound();
     }
 
     /// <summary>

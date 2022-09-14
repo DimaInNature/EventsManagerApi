@@ -9,10 +9,10 @@ public interface IEventsService
         CancellationToken cancellationToken = default,
         params Expression<Func<EventEntity, object>>[] includeProperties);
 
-    public Task<Option<EventEntity>> GetAsync(Guid id,
+    public Task<EventEntity?> GetAsync(Guid id,
         CancellationToken cancellationToken = default);
 
-    public Task<Option<EventEntity>> GetAsync(Guid id,
+    public Task<EventEntity?> GetAsync(Guid id,
         CancellationToken cancellationToken = default,
         params Expression<Func<EventEntity, object>>[] includeProperties);
 

@@ -24,8 +24,8 @@ public static class VisitorGenderMediatRProfile
 
         #region Queries
 
-        services.AddScoped<IRequest<Option<VisitorGenderEntity>>, GetVisitorGenderQuery>();
-        services.AddScoped<IRequestHandler<GetVisitorGenderQuery, Option<VisitorGenderEntity>>, GetVisitorGenderQueryHandler>();
+        services.AddScoped<IRequest<VisitorGenderEntity?>, GetVisitorGenderQuery>();
+        services.AddScoped<IRequestHandler<GetVisitorGenderQuery, VisitorGenderEntity?>, GetVisitorGenderQueryHandler>();
 
         services.AddScoped<IRequest<IEnumerable<VisitorGenderEntity>>, GetVisitorGendersListQuery>();
         services.AddScoped<IRequestHandler<GetVisitorGendersListQuery, IEnumerable<VisitorGenderEntity>>, GetVisitorGendersListQueryHandler>();

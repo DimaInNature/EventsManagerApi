@@ -2,7 +2,7 @@
 
 public sealed record UpdateVisitorCommand : IRequest<bool>
 {
-    public Option<VisitorEntity> Entity { get; }
+    public VisitorEntity? Entity { get; }
 
     public UpdateVisitorCommand(VisitorEntity entity) => Entity = entity;
 

@@ -2,7 +2,7 @@
 
 public sealed record CreateVisitorContactCommand : IRequest<bool>
 {
-    public Option<VisitorContactEntity> Entity { get; }
+    public VisitorContactEntity? Entity { get; }
 
     public CreateVisitorContactCommand(
         VisitorContactEntity entity) => Entity = entity;

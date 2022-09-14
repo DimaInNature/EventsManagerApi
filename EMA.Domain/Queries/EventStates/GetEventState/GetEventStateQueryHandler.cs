@@ -1,7 +1,7 @@
 ﻿namespace EMA.Domain.Queries.EventStates;
 
 public sealed record GetEventStateQueryHandler
-    : IRequestHandler<GetEventStateQuery, Option<EventStateEntity>>
+    : IRequestHandler<GetEventStateQuery, EventStateEntity?>
 {
     private readonly IGenericRepository<EventStateEntity> _repository;
 
@@ -9,10 +9,17 @@ public sealed record GetEventStateQueryHandler
         IGenericRepository<EventStateEntity> repository) =>
         _repository = repository;
 
-    public async Task<Option<EventStateEntity>> Handle(
+    public async Task<EventStateEntity?> Handle(
         GetEventStateQuery request,
-        CancellationToken cancellationToken = default) =>
-        request.Predicate.Match(
-            Some: _repository.GetFirstOrDefault,
-            None: () => default);
+        CancellationToken cancellationToken = default)
+    {
+        if (request.Predicate is null)
+        {
+            return default;
+        }
+
+        return await Task.FromResult(
+            result: _repository.GetFirstOrDefault(
+                predicate: request.Predicate));
+    }
 }

@@ -5,7 +5,7 @@ public interface IVisitorCredentialsService
     public Task<IEnumerable<VisitorCredentialEntity>> GetAllAsync(
         CancellationToken cancellationToken = default);
 
-    public Task<Option<VisitorCredentialEntity>> GetAsync(Guid id,
+    public Task<VisitorCredentialEntity?> GetAsync(Guid id,
          CancellationToken cancellationToken = default);
 
     public Task CreateAsync(VisitorCredentialEntity entity,

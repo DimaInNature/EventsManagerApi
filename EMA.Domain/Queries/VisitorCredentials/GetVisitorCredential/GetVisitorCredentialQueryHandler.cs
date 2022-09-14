@@ -1,7 +1,7 @@
 ﻿namespace EMA.Domain.Queries.VisitorCredentials;
 
 public sealed record GetVisitorCredentialQueryHandler
-    : IRequestHandler<GetVisitorCredentialQuery, Option<VisitorCredentialEntity>>
+    : IRequestHandler<GetVisitorCredentialQuery, VisitorCredentialEntity?>
 {
     private readonly IGenericRepository<VisitorCredentialEntity> _repository;
 
@@ -9,10 +9,17 @@ public sealed record GetVisitorCredentialQueryHandler
         IGenericRepository<VisitorCredentialEntity> repository) =>
         _repository = repository;
 
-    public async Task<Option<VisitorCredentialEntity>> Handle(
+    public async Task<VisitorCredentialEntity?> Handle(
         GetVisitorCredentialQuery request,
-        CancellationToken cancellationToken = default) =>
-        request.Predicate.Match(
-            Some: _repository.GetFirstOrDefault,
-            None: () => default);
+        CancellationToken cancellationToken = default)
+    {
+        if (request.Predicate is null)
+        {
+            return default;
+        }
+
+        return await Task.FromResult(
+            result: _repository.GetFirstOrDefault(
+                predicate: request.Predicate));
+    }
 }

@@ -24,8 +24,8 @@ public static class VisitorContactMediatRProfile
 
         #region Queries
 
-        services.AddScoped<IRequest<Option<VisitorContactEntity>>, GetVisitorContactQuery>();
-        services.AddScoped<IRequestHandler<GetVisitorContactQuery, Option<VisitorContactEntity>>, GetVisitorContactQueryHandler>();
+        services.AddScoped<IRequest<VisitorContactEntity?>, GetVisitorContactQuery>();
+        services.AddScoped<IRequestHandler<GetVisitorContactQuery, VisitorContactEntity?>, GetVisitorContactQueryHandler>();
 
         services.AddScoped<IRequest<IEnumerable<VisitorContactEntity>>, GetVisitorContactsListQuery>();
         services.AddScoped<IRequestHandler<GetVisitorContactsListQuery, IEnumerable<VisitorContactEntity>>, GetVisitorContactsListQueryHandler>();

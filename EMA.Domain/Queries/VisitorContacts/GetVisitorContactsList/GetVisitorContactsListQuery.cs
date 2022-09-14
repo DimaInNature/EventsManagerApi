@@ -3,7 +3,7 @@
 public sealed record GetVisitorContactsListQuery
     : IRequest<IEnumerable<VisitorContactEntity>>
 {
-    public Option<Func<VisitorContactEntity, bool>> Predicate { get; }
+    public Func<VisitorContactEntity, bool>? Predicate { get; }
 
     public GetVisitorContactsListQuery(
         Func<VisitorContactEntity, bool> predicate) =>

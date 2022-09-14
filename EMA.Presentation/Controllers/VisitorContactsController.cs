@@ -53,7 +53,7 @@ public class VisitorContactsController : ControllerBase
     {
         var visitorContact = await visitorContactsService.GetAsync(id, cancellationToken);
 
-        return visitorContact.Match<IActionResult>(Some: Ok, None: NotFound);
+        return visitorContact is not null ? Ok(value: visitorContact) : NotFound();
     }
 
     /// <summary>

@@ -12,7 +12,7 @@ public class VisitorGendersService : IVisitorGendersService
         CancellationToken cancellationToken = default) =>
         await _mediator.Send(request: new GetVisitorGendersListQuery(), cancellationToken);
 
-    public async Task<Option<VisitorGenderEntity>> GetAsync(Guid id,
+    public async Task<VisitorGenderEntity?> GetAsync(Guid id,
         CancellationToken cancellationToken = default) =>
         await _mediator.Send(request: new GetVisitorGenderQuery(
             predicate: entity => entity.Id.Equals(g: id)), cancellationToken);

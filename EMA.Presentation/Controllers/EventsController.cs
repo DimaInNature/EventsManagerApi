@@ -53,7 +53,7 @@ public class EventsController : ControllerBase
     {
         var @event = await eventsService.GetAsync(id, cancellationToken);
 
-        return @event.Match<IActionResult>(Some: Ok, None: NotFound);
+        return @event is not null ? Ok(value: @event) : NotFound();
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ public class EventsController : ControllerBase
         var @event = await eventsService.GetAsync(id, cancellationToken,
             includeProperties: @event => @event.State!);
 
-        return @event.Select(@event => @event.State).Match<IActionResult>(Some: Ok, None: NotFound);
+        return @event?.State is not null ? Ok(value: @event.State) : NotFound();
     }
 
     /// <summary>
@@ -106,11 +106,10 @@ public class EventsController : ControllerBase
         IEventsService eventsService,
         CancellationToken cancellationToken)
     {
-        var eventMembers = await eventsService.GetAsync(id, cancellationToken,
+        var @event = await eventsService.GetAsync(id, cancellationToken,
             includeProperties: @event => @event.Members!);
 
-        return eventMembers.Select(@event => @event.Members)
-            .Match<IActionResult>(Some: Ok, None: NotFound);
+        return @event?.Members is not null ? Ok(value: @event.Members) : NotFound();
     }
 
     /// <summary>
@@ -139,7 +138,7 @@ public class EventsController : ControllerBase
             @event => @event.Members!,
             @event => @event.State!);
 
-        return @event.Match<IActionResult>(Some: Ok, None: NotFound);
+        return @event is not null ? Ok(value: @event) : NotFound();
     }
 
     /// <summary>
@@ -248,14 +247,12 @@ public class EventsController : ControllerBase
             id: eventId, cancellationToken,
             includeProperties: @event => @event.Members!);
 
-        var eventMembers = @event.Select(f: @event => @event.Members);
+        var eventMembers = @event?.Members;
 
-        var deletableMember = eventMembers.Select(
-            f: @event => @event!
-            .FirstOrDefault(
-                predicate: @event => @event.Id.Equals(g: memberId)));
+        var deletableMember = eventMembers?.FirstOrDefault(
+            predicate: member => member.Id.Equals(g: memberId));
 
-        if (deletableMember.IsNone)
+        if (deletableMember is null)
         {
             return NotFound(value: "This member was not registered for this event.");
         }

@@ -5,10 +5,10 @@ public interface IVisitorsService
     public Task<IEnumerable<VisitorEntity>> GetAllAsync(
         CancellationToken cancellationToken = default);
 
-    public Task<Option<VisitorEntity>> GetAsync(Guid id,
+    public Task<VisitorEntity?> GetAsync(Guid id,
         CancellationToken cancellationToken = default);
 
-    public Task<Option<VisitorEntity>> GetAsync(Guid id,
+    public Task<VisitorEntity?> GetAsync(Guid id,
       CancellationToken cancellationToken = default,
       params Expression<Func<VisitorEntity, object>>[] includeProperties);
 

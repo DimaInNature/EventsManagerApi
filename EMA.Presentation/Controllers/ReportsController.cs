@@ -25,10 +25,9 @@ public class ReportsController : ControllerBase
         var @event = await eventsService.GetAsync(id, cancellationToken,
             includeProperties: @event => @event.Members!);
 
-        var eventMembers = await @event.Select(f: @event => @event.Members)
-            .AsEnumerableAsync();
+        var eventMembers = @event?.Members;
 
-        int membersCount = eventMembers.Count();
+        int membersCount = eventMembers?.Count() ?? 0;
 
         return membersCount;
     }

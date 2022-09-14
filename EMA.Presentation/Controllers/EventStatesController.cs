@@ -53,7 +53,7 @@ public class EventStatesController : ControllerBase
     {
         var eventState = await eventStateService.GetAsync(id, cancellationToken);
 
-        return eventState.Match<IActionResult>(Some: Ok, None: NotFound);
+        return eventState is not null ? Ok(value: eventState) : NotFound();
     }
 
     /// <summary>

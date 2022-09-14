@@ -11,8 +11,15 @@ public sealed record GetVisitorsListQueryHandler
 
     public async Task<IEnumerable<VisitorEntity>> Handle(
         GetVisitorsListQuery request,
-        CancellationToken cancellationToken = default) =>
-        request.Predicate.Match(
-            Some: _repository.GetAll,
-            None: _repository.GetAll);
+        CancellationToken cancellationToken = default)
+    {
+        if (request.Predicate is null)
+        {
+            return await Task.FromResult(result: _repository.GetAll());
+        }
+
+        return await Task.FromResult(
+            result: _repository.GetAll(
+                predicate: request.Predicate));
+    }
 }

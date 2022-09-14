@@ -12,7 +12,7 @@ public class EventStatesService : IEventStatesService
         CancellationToken cancellationToken = default) =>
         await _mediator.Send(request: new GetEventStatesListQuery(), cancellationToken);
 
-    public async Task<Option<EventStateEntity>> GetAsync(Guid id,
+    public async Task<EventStateEntity?> GetAsync(Guid id,
         CancellationToken cancellationToken = default) =>
         await _mediator.Send(request: new GetEventStateQuery(
             predicate: entity => entity.Id.Equals(g: id)), cancellationToken);

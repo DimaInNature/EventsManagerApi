@@ -24,8 +24,8 @@ public static class EventStateMediatRProfile
 
         #region Queries
 
-        services.AddScoped<IRequest<Option<EventStateEntity>>, GetEventStateQuery>();
-        services.AddScoped<IRequestHandler<GetEventStateQuery, Option<EventStateEntity>>, GetEventStateQueryHandler>();
+        services.AddScoped<IRequest<EventStateEntity?>, GetEventStateQuery>();
+        services.AddScoped<IRequestHandler<GetEventStateQuery, EventStateEntity?>, GetEventStateQueryHandler>();
 
         services.AddScoped<IRequest<IEnumerable<EventStateEntity>>, GetEventStatesListQuery>();
         services.AddScoped<IRequestHandler<GetEventStatesListQuery, IEnumerable<EventStateEntity>>, GetEventStatesListQueryHandler>();

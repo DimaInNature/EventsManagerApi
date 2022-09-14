@@ -17,12 +17,12 @@ public class EventsService : IEventsService
         params Expression<Func<EventEntity, object>>[] includeProperties) =>
         await _mediator.Send(request: new GetEventsListQuery(includeProperties));
 
-    public async Task<Option<EventEntity>> GetAsync(Guid id,
+    public async Task<EventEntity?> GetAsync(Guid id,
         CancellationToken cancellationToken = default) =>
         await _mediator.Send(request: new GetEventQuery(
             predicate: entity => entity.Id.Equals(g: id)), cancellationToken);
 
-    public async Task<Option<EventEntity>> GetAsync(Guid id,
+    public async Task<EventEntity?> GetAsync(Guid id,
         CancellationToken cancellationToken = default,
         params Expression<Func<EventEntity, object>>[] includes) =>
         await _mediator.Send(request: new GetEventQuery(

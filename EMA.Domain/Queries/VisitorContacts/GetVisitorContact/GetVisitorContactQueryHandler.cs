@@ -1,7 +1,7 @@
 ﻿namespace EMA.Domain.Queries.VisitorContacts;
 
 public sealed record GetVisitorContactQueryHandler
-    : IRequestHandler<GetVisitorContactQuery, Option<VisitorContactEntity>>
+    : IRequestHandler<GetVisitorContactQuery, VisitorContactEntity?>
 {
     private readonly IGenericRepository<VisitorContactEntity> _repository;
 
@@ -9,10 +9,17 @@ public sealed record GetVisitorContactQueryHandler
         IGenericRepository<VisitorContactEntity> repository) =>
         _repository = repository;
 
-    public async Task<Option<VisitorContactEntity>> Handle(
+    public async Task<VisitorContactEntity?> Handle(
         GetVisitorContactQuery request,
-        CancellationToken cancellationToken = default) =>
-        request.Predicate.Match(
-            Some: _repository.GetFirstOrDefault,
-            None: () => default);
+        CancellationToken cancellationToken = default)
+    {
+        if (request.Predicate is null)
+        {
+            return default;
+        }
+
+        return await Task.FromResult(
+            result: _repository.GetFirstOrDefault(
+                predicate: request.Predicate));
+    }
 }

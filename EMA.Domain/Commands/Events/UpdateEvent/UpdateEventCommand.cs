@@ -2,7 +2,7 @@
 
 public sealed record UpdateEventCommand : IRequest<bool>
 {
-    public Option<EventEntity> Entity { get; }
+    public EventEntity? Entity { get; }
 
     public UpdateEventCommand(
         EventEntity entity) => Entity = entity;

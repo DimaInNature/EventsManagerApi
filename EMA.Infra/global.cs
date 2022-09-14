@@ -24,7 +24,6 @@ global using EMA.Infra.IoC.Profiles;
 global using EMA.Persistence.Entities;
 global using EMA.Persistence.Interfaces;
 global using EMA.Persistence.Repositories;
-global using LanguageExt;
 global using MediatR;
 global using Microsoft.Extensions.DependencyInjection;
 global using System.Reflection;

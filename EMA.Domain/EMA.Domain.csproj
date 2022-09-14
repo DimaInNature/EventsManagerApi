@@ -11,7 +11,6 @@
     <PackageReference Include="HotChocolate.AspNetCore" Version="13.0.0-preview.47" />
     <PackageReference Include="HotChocolate.Data" Version="13.0.0-preview.47" />
     <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.0.0-preview.47" />
-    <PackageReference Include="LanguageExt.Core" Version="4.3.2-beta" />
     <PackageReference Include="MediatR" Version="10.0.1" />
   </ItemGroup>
 

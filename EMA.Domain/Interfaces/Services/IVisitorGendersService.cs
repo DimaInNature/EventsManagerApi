@@ -5,7 +5,7 @@ public interface IVisitorGendersService
     public Task<IEnumerable<VisitorGenderEntity>> GetAllAsync(
         CancellationToken cancellationToken = default);
 
-    public Task<Option<VisitorGenderEntity>> GetAsync(Guid id,
+    public Task<VisitorGenderEntity?> GetAsync(Guid id,
         CancellationToken cancellationToken = default);
 
     public Task CreateAsync(VisitorGenderEntity entity,

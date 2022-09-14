@@ -12,7 +12,7 @@ public class VisitorCredentialsService : IVisitorCredentialsService
         CancellationToken cancellationToken = default) =>
         await _mediator.Send(request: new GetVisitorCredentialsListQuery(), cancellationToken);
 
-    public async Task<Option<VisitorCredentialEntity>> GetAsync(Guid id,
+    public async Task<VisitorCredentialEntity?> GetAsync(Guid id,
         CancellationToken cancellationToken = default) =>
         await _mediator.Send(request: new GetVisitorCredentialQuery(
             predicate: entity => entity.Id.Equals(g: id)), cancellationToken);

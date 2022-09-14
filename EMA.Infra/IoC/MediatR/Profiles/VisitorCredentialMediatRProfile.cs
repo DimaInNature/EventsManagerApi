@@ -24,8 +24,8 @@ public static class VisitorCredentialMediatRProfile
 
         #region Queries
 
-        services.AddScoped<IRequest<Option<VisitorCredentialEntity>>, GetVisitorCredentialQuery>();
-        services.AddScoped<IRequestHandler<GetVisitorCredentialQuery, Option<VisitorCredentialEntity>>, GetVisitorCredentialQueryHandler>();
+        services.AddScoped<IRequest<VisitorCredentialEntity?>, GetVisitorCredentialQuery>();
+        services.AddScoped<IRequestHandler<GetVisitorCredentialQuery, VisitorCredentialEntity?>, GetVisitorCredentialQueryHandler>();
 
         services.AddScoped<IRequest<IEnumerable<VisitorCredentialEntity>>, GetVisitorCredentialsListQuery>();
         services.AddScoped<IRequestHandler<GetVisitorCredentialsListQuery, IEnumerable<VisitorCredentialEntity>>, GetVisitorCredentialsListQueryHandler>();

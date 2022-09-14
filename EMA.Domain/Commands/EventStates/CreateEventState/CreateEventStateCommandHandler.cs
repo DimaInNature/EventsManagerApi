@@ -11,10 +11,14 @@ public sealed record CreateEventStateCommandHandler
 
     public async Task<bool> Handle(
         CreateEventStateCommand request,
-        CancellationToken cancellationToken = default) =>
-        await request.Entity.MatchAsync(
-            Some: async (EventStateEntity entity) =>
-                await _repository.CreateAsync(entity, cancellationToken),
-            None: async () =>
-                await Task.FromResult<bool>(result: default));
+        CancellationToken cancellationToken = default)
+    {
+        if (request.Entity is null)
+        {
+            return await Task.FromResult<bool>(result: default);
+        }
+
+        return await _repository.CreateAsync(
+            entity: request.Entity, cancellationToken);
+    }
 }

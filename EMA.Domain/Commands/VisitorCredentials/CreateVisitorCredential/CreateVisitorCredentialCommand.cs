@@ -2,7 +2,7 @@
 
 public sealed record CreateVisitorCredentialCommand : IRequest<bool>
 {
-    public Option<VisitorCredentialEntity> Entity { get; }
+    public VisitorCredentialEntity? Entity { get; }
 
     public CreateVisitorCredentialCommand(
         VisitorCredentialEntity entity) => Entity = entity;

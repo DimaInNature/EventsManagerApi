@@ -12,12 +12,12 @@ public class VisitorsService : IVisitorsService
         CancellationToken cancellationToken = default) =>
         await _mediator.Send(request: new GetVisitorsListQuery(), cancellationToken);
 
-    public async Task<Option<VisitorEntity>> GetAsync(Guid id,
+    public async Task<VisitorEntity?> GetAsync(Guid id,
         CancellationToken cancellationToken = default) =>
         await _mediator.Send(request: new GetVisitorQuery(
             predicate: entity => entity.Id.Equals(g: id)), cancellationToken);
 
-    public async Task<Option<VisitorEntity>> GetAsync(Guid id,
+    public async Task<VisitorEntity?> GetAsync(Guid id,
       CancellationToken cancellationToken = default,
       params Expression<Func<VisitorEntity, object>>[] includes) =>
       await _mediator.Send(request: new GetVisitorQuery(

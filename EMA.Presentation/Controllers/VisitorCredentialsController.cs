@@ -53,7 +53,7 @@ public class VisitorCredentialsController : ControllerBase
     {
         var eventState = await visitorCredentialsService.GetAsync(id, cancellationToken);
 
-        return eventState.Match<IActionResult>(Some: Ok, None: NotFound);
+        return eventState is not null ? Ok(value: eventState) : NotFound();
     }
 
     /// <summary>

@@ -1,9 +1,9 @@
 ﻿namespace EMA.Domain.Queries.VisitorCredentials;
 
 public sealed record GetVisitorCredentialQuery
-    : IRequest<Option<VisitorCredentialEntity>>
+    : IRequest<VisitorCredentialEntity?>
 {
-    public Option<Func<VisitorCredentialEntity, bool>> Predicate { get; }
+    public Func<VisitorCredentialEntity, bool>? Predicate { get; }
 
     public GetVisitorCredentialQuery(
         Func<VisitorCredentialEntity, bool> predicate) =>
