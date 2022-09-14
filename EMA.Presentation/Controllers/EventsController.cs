@@ -365,4 +365,33 @@ public class EventsController : ControllerBase
 
         return NoContent();
     }
+
+    /// <summary>
+    /// Delete all unvisited events..
+    /// </summary>
+    /// <remarks>
+    /// Request example:
+    ///
+    ///     DELETE /Events/Unvisited
+    ///
+    /// </remarks>
+    /// <response code="204">The object has been successfully deleted.</response>
+    [Tags(tags: "Events")]
+    [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
+    [HttpDelete(template: "Unvisited")]
+    public async Task<ActionResult> DeleteUnvisited(
+        IEventsService eventsService,
+        CancellationToken cancellationToken)
+    {
+        var @events = await eventsService.GetAllAsync(cancellationToken,
+            includeProperties: @event => @event.Members!);
+
+        var unvisitedEvents = events.Where(
+            predicate: @event => @event.Members is null ||
+            @event.Members?.Any() is false);
+
+        await eventsService.DeleteAsync(entities: unvisitedEvents, cancellationToken);
+
+        return NoContent();
+    }
 }

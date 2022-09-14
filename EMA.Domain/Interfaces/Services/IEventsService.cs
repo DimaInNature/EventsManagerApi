@@ -24,4 +24,7 @@ public interface IEventsService
 
     public Task DeleteAsync(Guid id,
         CancellationToken cancellationToken = default);
+
+    public Task DeleteAsync(IEnumerable<EventEntity> entities,
+        CancellationToken cancellationToken = default);
 }

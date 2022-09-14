@@ -92,6 +92,18 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         return await _context.SaveChangesAsync(cancellationToken: cancellationToken) is 1;
     }
 
+    public async Task<bool> DeleteAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+    {
+        if (entities is null || entities.Any() is false)
+        {
+            return false;
+        }
+
+        _dbSet.RemoveRange(entities);
+
+        return await _context.SaveChangesAsync(cancellationToken: cancellationToken) == entities.Count();
+    }
+
     private IEnumerable<TEntity> IncludeWithNoTracking(
          params Expression<Func<TEntity, object>>[] _includeProperties) =>
          _includeProperties.Aggregate(

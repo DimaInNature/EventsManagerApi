@@ -20,6 +20,9 @@ public static class EventMediatRProfile
         services.AddScoped<IRequest<bool>, DeleteEventCommand>();
         services.AddScoped<IRequestHandler<DeleteEventCommand, bool>, DeleteEventCommandHandler>();
 
+        services.AddScoped<IRequest<bool>, DeleteEventsListCommand>();
+        services.AddScoped<IRequestHandler<DeleteEventsListCommand, bool>, DeleteEventsListCommandHandler>();
+
         #endregion
 
         #region Queries

@@ -27,4 +27,6 @@ public interface IGenericRepository<TEntity>
     public Task<bool> UpdateAsync(TEntity entity, CancellationToken token = default);
 
     public Task<bool> DeleteAsync(Guid key, CancellationToken token = default);
+
+    public Task<bool> DeleteAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 }

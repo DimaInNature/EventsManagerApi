@@ -39,4 +39,9 @@ public class EventsService : IEventsService
     public async Task DeleteAsync(Guid id,
         CancellationToken cancellationToken = default) =>
         await _mediator.Send(request: new DeleteEventCommand(id), cancellationToken);
+
+    public async Task DeleteAsync(
+        IEnumerable<EventEntity> entities,
+        CancellationToken cancellationToken = default) =>
+        await _mediator.Send(request: new DeleteEventsListCommand(entities), cancellationToken);
 }
