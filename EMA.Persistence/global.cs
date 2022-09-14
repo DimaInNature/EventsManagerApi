@@ -4,5 +4,6 @@ global using EMA.Persistence.Interfaces;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
+global using System.ComponentModel.DataAnnotations;
 global using System.Linq.Expressions;
 global using System.Text.Json.Serialization;

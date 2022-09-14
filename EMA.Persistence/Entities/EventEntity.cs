@@ -4,8 +4,10 @@ public class EventEntity : IDatabaseEntity
 {
     public Guid Id { get; set; }
 
+    [MaxLength(length: 50)]
     public string? Name { get; set; }
 
+    [MaxLength(length: 300)]
     public string? Description { get; set; }
 
     public DateTime? StartDate { get; set; }

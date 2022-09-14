@@ -4,8 +4,10 @@ public class VisitorContactEntity : IDatabaseEntity
 {
     public Guid Id { get; set; }
 
+    [MaxLength(length: 20)]
     public string? Phone { get; set; }
 
+    [MaxLength(length: 50)]
     public string? Email { get; set; }
 
     [JsonIgnore]
