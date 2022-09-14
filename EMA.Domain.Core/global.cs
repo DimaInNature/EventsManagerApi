@@ -1,1 +1,1 @@
-﻿
+﻿global using EMA.Persistence.Entities;

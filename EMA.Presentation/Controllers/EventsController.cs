@@ -193,6 +193,59 @@ public class EventsController : ControllerBase
     }
 
     /// <summary>
+    /// Create member in event.
+    /// </summary>
+    /// <remarks>
+    /// Request example:
+    ///
+    ///     POST /Events/{id}/Members
+    ///     {
+    ///       "member": {
+    ///           "credentials {
+    ///              "name": "John",
+    ///              "lastName": "Doe",
+    ///              "patronymic": "None",
+    ///              "birthDay": datetime
+    ///            }
+    ///           "genderId": GUID
+    ///        },
+    ///       "eventId": GUID
+    ///     }
+    /// </remarks>
+    /// <response code="201">Created.</response>
+    [Tags(tags: "Events")]
+    [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+    [HttpPost(template: "{id}/Members")]
+    public async Task<IActionResult> CreateMember(
+            [FromBody] CreateEventMemberResponse request,
+            IVisitorsService visitorsService,
+            IEventsService eventsService,
+            CancellationToken cancellationToken)
+    {
+        if (request.Member is null)
+        {
+            return BadRequest(error: "Member is empty.");
+        }
+
+        var member = request.Member;
+
+        var @event = await eventsService.GetAsync(id: request.EventId, cancellationToken);
+
+        if (@event is null)
+        {
+            return NotFound(value: "Event is not found.");
+        }
+
+        member.EventId = @event.Id;
+
+        await visitorsService.CreateAsync(entity: member, cancellationToken);
+
+        return Ok();
+    }
+
+    /// <summary>
     /// Create event.
     /// </summary>
     /// <remarks>
