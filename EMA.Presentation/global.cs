@@ -1,4 +1,5 @@
-﻿global using EMA.Domain.Interfaces.Services;
+﻿global using EMA.Domain.Core.Models.Responses.Events;
+global using EMA.Domain.Interfaces.Services;
 global using EMA.Infra.IoC;
 global using EMA.Infra.IoC.MediatR;
 global using EMA.Infra.IoC.Profiles;

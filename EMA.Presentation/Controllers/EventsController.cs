@@ -142,6 +142,57 @@ public class EventsController : ControllerBase
     }
 
     /// <summary>
+    /// Finish event.
+    /// </summary>
+    /// <remarks>
+    /// Request example:
+    ///
+    ///     POST /Events/Finish
+    ///     {
+    ///         "eventId": GUID,
+    ///         "stateId": GUID
+    ///     }
+    ///
+    /// </remarks>
+    /// <response code="200"> Finished. </response>
+    [Tags(tags: "Events")]
+    [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+    [ProducesResponseType(statusCode: StatusCodes.Status412PreconditionFailed)]
+    [HttpPost(template: "Finish")]
+    public async Task<IActionResult> Finish(
+        [FromBody] FinishEventResponse request,
+        IEventsService eventsService,
+        IEventStatesService eventStatesService,
+        CancellationToken cancellationToken)
+    {
+        var @event = await eventsService.GetAsync(id: request.EventId, cancellationToken);
+
+        if (@event is null)
+        {
+            return NotFound(value: "Event is not found.");
+        }
+
+        if (@event.StartDate >= DateTime.Now)
+        {
+            return StatusCode(statusCode: StatusCodes.Status412PreconditionFailed);
+        }
+
+        var state = await eventStatesService.GetAsync(id: request.StateId, cancellationToken);
+
+        if (state is null)
+        {
+            return NotFound(value: "State is not found.");
+        }
+
+        @event.StateId = state.Id;
+
+        await eventsService.UpdateAsync(entity: @event, cancellationToken);
+
+        return Ok();
+    }
+
+    /// <summary>
     /// Create event.
     /// </summary>
     /// <remarks>

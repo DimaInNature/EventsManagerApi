@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EMA.Domain.Core\EMA.Domain.Core.csproj" />
     <ProjectReference Include="..\EMA.Infra\EMA.Infra.csproj" />
     <ProjectReference Include="..\EMA.Persistence\EMA.Persistence.csproj" />
   </ItemGroup>
